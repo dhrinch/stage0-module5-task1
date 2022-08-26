@@ -95,18 +95,14 @@ public class ArrayTasks {
      * arr = [1, 2]         -> [1, 2]
      */
     public int[] getOnlyPositiveNumbers(int[] arr) {
+        int [] positiveNumbers = new int[arr.length];
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] > 0)
-                count++;
+                positiveNumbers[count++] = arr[i];
         }
         int[] array = new int[count];
-        for (int i = 0; i < arr.length; i++) {
-            for(int j = 0; j < array.length; j++) {
-                if (arr[i] > 0)
-                    array[j] = arr[i];
-            }
-        }
+        System.arraycopy(positiveNumbers, 0, array, 0, count);
         return array;
     }
 
@@ -121,21 +117,26 @@ public class ArrayTasks {
      * arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
     public int[][] sortRaggedArray(int[][] arr) {
-        int[][] array = new int[arr.length][];
-        for (int i = 0; i < arr.length; i++) {
-            array[i] = arr[i];
+        for (int i = 0; i < arr.length; i++){
+            for (int j = 0; j < arr.length - 1; j++){
+                if (arr[j].length > arr[j+1].length){
+                    int[] temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
         }
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                for (int k = j + 1; k < array[i].length; k++) {
-                    if (array[i][j] > array[i][k]) {
-                        int temp = array[i][j];
-                        array[i][j] = array[i][k];
-                        array[i][k] = temp;
+        for (int i = 0; i < arr.length; i++){
+            for (int j = 0; j < arr[i].length; j++){
+                for (int k = 0; k < arr[i].length - 1; k++){
+                    if (arr[i][k] > arr[i][k+1]){
+                        int temp = arr[i][k+1];
+                        arr[i][k+1] = arr[i][k];
+                        arr[i][k] = temp;
                     }
                 }
             }
         }
-        return array;
+        return arr;
     }
 }
